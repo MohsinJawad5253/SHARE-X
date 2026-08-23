@@ -1,40 +1,40 @@
-# Project Update: Home Screen Components Integration
+# File Sharing App - Home & QR Scanner Module
 
-This update focuses on stabilizing the application by resolving component errors and building out the modular structure of the Home Screen. New UI components have been introduced and integrated into the main navigation flow.
+This update introduces the core UI for the Home Screen and implements a functional QR Scanner modal for device pairing and file transfers.
 
-## 🚀 Changes Introduced
+## 🚀 Key Changes
 
-### 🛠 Fixes & Improvements
-- **Error Resolution:** Addressed rendering issues by providing proper component definitions for missing references.
-- **Scroll Management:** Implemented a `ScrollView` in the `HomeScreen` to handle content overflow and improve the user experience on smaller devices.
+### 📱 Home Screen Enhancements
+- **Home Layout**: Integrated `HomeHeader`, `SendRecieveButton`, `Options`, and `Misc` components into a cohesive scrollable view.
+- **Send & Receive Buttons**: Added stylized buttons for quick navigation to sending and receiving screens.
+- **Quick Options**: Implemented an options grid for selecting specific file types (Photos, Audio, Files, Contacts).
+- **Branding & UI**: Added a `Misc` section featuring promotional banners and developer credits using custom text components.
 
-### 🆕 New Components
-Located in `src/components/home/`, the following functional components were added to modularize the dashboard:
-- **`SendRecieveButton.tsx`**: A placeholder component for the primary transaction actions (Send/Receive).
-- **`Options.tsx`**: A container for quick-access user options and settings.
-- **`Misc.tsx`**: A utility component for miscellaneous information or secondary features.
+### 🔍 QR Scanner & Bottom Navigation
+- **AbsoluteQRBottom**: A persistent bottom navigation bar featuring a primary QR scan trigger and navigation to received files.
+- **QR Scanner Modal**:
+    - Built using `react-native-vision-camera`.
+    - Handles camera permissions automatically.
+    - Includes a shimmer loading effect during camera initialization.
+    - Features a custom UI for code scanning with real-time feedback.
+    - Implements logic to parse connection strings (TCP host/port).
 
-### 📱 Screen Updates
-- **`HomeScreen.tsx`**: 
-    - Integrated `SendRecieveButton`, `Options`, and `Misc` components.
-    - Wrapped the main content area in a `ScrollView` with consistent padding (`15px`) and bottom spacing (`100px`) to prevent UI clipping.
+### 🛠 Technical Updates
+- **Navigation**: Registered `ReceiveScreen` and added logic for navigating between send/receive flows.
+- **Permissions**: Integrated camera permission handling for Android/iOS.
+- **Reanimated**: Leveraged `react-native-reanimated` for smooth UI transitions and loading states.
+- **Security**: Updated `.gitignore` to exclude `tls_certs`.
 
-## 📂 Project Structure Update
-```text
-src/
-├── components/
-│   └── home/
-│       ├── Misc.tsx                # Added
-│       ├── Options.tsx             # Added
-│       └── SendRecieveButton.tsx   # Added
-└── screens/
-    └── HomeScreen.tsx              # Updated integration
-```
+## 📦 New Components
 
-## ⚙️ Technical Details
-- **Framework:** React Native
-- **Styling:** Utilizes `commonStyles.baseContainer` for consistency across screens.
-- **Dependencies:** React hooks and functional component architecture.
+| Component | Description |
+| :--- | :--- |
+| `AbsoluteQRBottom` | Floating bottom tab bar with QR trigger. |
+| `QRScannerModal` | Full-screen modal for scanning transfer codes. |
+| `SendRecieveButton` | Primary action buttons for the home screen. |
+| `Options` | Category-based file selection grid. |
+| `Misc` | Decorative banners and application info. |
 
----
-*This README was automatically generated based on the latest commit changes.*
+## 🔧 Setup Notes
+- Ensure camera permissions are configured in `Info.plist` (iOS) and `AndroidManifest.xml` (Android) to support the QR Scanner.
+- New dependencies: `react-native-vision-camera`, `react-native-reanimated`, `react-native-linear-gradient`.
