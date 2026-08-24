@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, TouchableOpacity } from 'react-native'
 import React, { FC } from 'react'
 import { optionStyles } from '../../styles/optionsStyles';
 import Icon from '../global/Icon';
@@ -11,7 +11,7 @@ const Options: FC<{
   onFilePickedUp?: (file: any) => void;
 }> = ({ isHome, onFilePickedUp, onMediaPickedUp }) => {
   return (
-    <View style={optionStyles.container}>\
+    <View style={optionStyles.container}>
       <TouchableOpacity style={optionStyles.subContainer} onPress={() => {}}>
   <Icon
     name="images"

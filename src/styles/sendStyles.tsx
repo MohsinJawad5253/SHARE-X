@@ -79,8 +79,8 @@ export const sendStyles = StyleSheet.create({
         height: screenWidth,
     },
     profileImage: {
-        height: 50,
-        width: 50,
+        height: 60,
+        width: 60,
         resizeMode: "cover",
         borderRadius: 100,
         zIndex:5
