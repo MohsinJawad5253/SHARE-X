@@ -96,7 +96,7 @@ const ReceivedFileScreen: FC = () => {
                     ReactNativeBlobUtil.android
                         .actionViewIntent(normalizedPath, '*/*')
                         .then(() => console.log('File opened successfully'))
-                        .catch(err => console.error('Error opening file:', err));
+                        .catch(err => console.error('Error opening file', err));
                 }
 
             }}
