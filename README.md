@@ -1,40 +1,42 @@
-# File Sharing App - Home & QR Scanner Module
+# Project Title: React Native File Sharing App
 
-This update introduces the core UI for the Home Screen and implements a functional QR Scanner modal for device pairing and file transfers.
+This project is a React Native application designed for seamless local file sharing, featuring a modern UI and robust file handling capabilities. This update introduces the dedicated `ReceiveScreen`, UI improvements, and bug fixes across various components.
 
-## 🚀 Key Changes
+## 🚀 Recent Changes
 
-### 📱 Home Screen Enhancements
-- **Home Layout**: Integrated `HomeHeader`, `SendRecieveButton`, `Options`, and `Misc` components into a cohesive scrollable view.
-- **Send & Receive Buttons**: Added stylized buttons for quick navigation to sending and receiving screens.
-- **Quick Options**: Implemented an options grid for selecting specific file types (Photos, Audio, Files, Contacts).
-- **Branding & UI**: Added a `Misc` section featuring promotional banners and developer credits using custom text components.
+### 📱 New Features & UI Components
+- **ReceiveScreen Implementation**: Added a full-featured `ReceiveScreen.tsx` replacing the previous placeholder. 
+    - Integrates `LinearGradient` for a polished background.
+    - Includes a scan animation using `LottieView`.
+    - Features a QR Code generation trigger for receiving files via hotspot.
+- **BreakerText Component**: Introduced a new reusable UI component `BreakerText.tsx` to display text with horizontal dividers (e.g., "— or —"), enhancing layout styling.
 
-### 🔍 QR Scanner & Bottom Navigation
-- **AbsoluteQRBottom**: A persistent bottom navigation bar featuring a primary QR scan trigger and navigation to received files.
-- **QR Scanner Modal**:
-    - Built using `react-native-vision-camera`.
-    - Handles camera permissions automatically.
-    - Includes a shimmer loading effect during camera initialization.
-    - Features a custom UI for code scanning with real-time feedback.
-    - Implements logic to parse connection strings (TCP host/port).
+### 🔧 Bug Fixes & Refactoring
+- **Clean Imports**: Removed unused `View` and `Text` imports in `CustomText.tsx` and `Options.tsx` to optimize code quality.
+- **Syntax Fixes**: Removed a stray backslash in the `Options.tsx` container view.
+- **Path Handling**: Updated error logging in `ReceivedFileScreen.tsx` for better debugging when opening files via `ReactNativeBlobUtil`.
+- **Styling Updates**: 
+    - Adjusted `profileImage` dimensions in `sendStyles.tsx` from `50x50` to `60x60` for better visibility in scanning animations.
+    - Refined spacing and alignment in the receive screen info containers.
 
-### 🛠 Technical Updates
-- **Navigation**: Registered `ReceiveScreen` and added logic for navigating between send/receive flows.
-- **Permissions**: Integrated camera permission handling for Android/iOS.
-- **Reanimated**: Leveraged `react-native-reanimated` for smooth UI transitions and loading states.
-- **Security**: Updated `.gitignore` to exclude `tls_certs`.
+## 📂 Project Structure Updates
+- **src/screens/ReceiveScreen.tsx**: Now a TypeScript-based functional component.
+- **src/components/ui/BreakerText.tsx**: Added to the global component library.
 
-## 📦 New Components
+## 🛠 Tech Stack
+- **Framework**: React Native
+- **Styling**: Styled Components / StyleSheet, React Native Linear Gradient
+- **Animations**: Lottie for React Native
+- **Utilities**: 
+    - `react-native-device-info`
+    - `react-native-blob-util`
+    - `react-native-responsive-fontsize`
 
-| Component | Description |
-| :--- | :--- |
-| `AbsoluteQRBottom` | Floating bottom tab bar with QR trigger. |
-| `QRScannerModal` | Full-screen modal for scanning transfer codes. |
-| `SendRecieveButton` | Primary action buttons for the home screen. |
-| `Options` | Category-based file selection grid. |
-| `Misc` | Decorative banners and application info. |
+## 📸 Component Preview
+- **ReceiveScreen**: Displays a scanning animation, device info, and a "Show QR" button to facilitate incoming file transfers.
+- **BreakerText**: A simple divider used to separate different action paths (like "Nearby" vs "QR Code").
 
-## 🔧 Setup Notes
-- Ensure camera permissions are configured in `Info.plist` (iOS) and `AndroidManifest.xml` (Android) to support the QR Scanner.
-- New dependencies: `react-native-vision-camera`, `react-native-reanimated`, `react-native-linear-gradient`.
+## 🚦 Getting Started
+1. Install dependencies: `npm install` or `yarn install`.
+2. Ensure you have the required assets in `src/assets/animations/` and `src/assets/images/`.
+3. Run the app: `npx react-native run-android` or `npx react-native run-ios`.
