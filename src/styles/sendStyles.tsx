@@ -41,11 +41,11 @@ export const sendStyles = StyleSheet.create({
         alignItems: 'center',
     },
     backButton: {
-        padding: 4,
+        padding: 6,
         borderRadius: 100,
         zIndex: 4,
         position: "absolute",
-        top: 10,
+        top: 65,
         left: 10,
         shadowOffset: { width: 1, height: 1 },
         shadowOpacity: 0.5,
