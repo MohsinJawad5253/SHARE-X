@@ -1,42 +1,74 @@
-# Project Title: React Native File Sharing App
+# ShareX - Data & Communication Module
 
-This project is a React Native application designed for seamless local file sharing, featuring a modern UI and robust file handling capabilities. This update introduces the dedicated `ReceiveScreen`, UI improvements, and bug fixes across various components.
+This update introduces core infrastructure for data persistence, state management for large file transfers, and secure TCP communication within a React Native environment.
 
-## 🚀 Recent Changes
+## New Features
 
-### 📱 New Features & UI Components
-- **ReceiveScreen Implementation**: Added a full-featured `ReceiveScreen.tsx` replacing the previous placeholder. 
-    - Integrates `LinearGradient` for a polished background.
-    - Includes a scan animation using `LottieView`.
-    - Features a QR Code generation trigger for receiving files via hotspot.
-- **BreakerText Component**: Introduced a new reusable UI component `BreakerText.tsx` to display text with horizontal dividers (e.g., "— or —"), enhancing layout styling.
+### 1. Data Persistence & Storage
+- **MMKV Integration**: Implemented a high-performance key-value storage solution using `react-native-mmkv`.
+- **Encrypted Storage**: Secure storage instance configured with an encryption key for sensitive data.
+- **MMKV Wrapper**: A clean interface (`mmkvStorage`) providing `setItem`, `getItem`, and `removeItem` methods for easier consumption.
 
-### 🔧 Bug Fixes & Refactoring
-- **Clean Imports**: Removed unused `View` and `Text` imports in `CustomText.tsx` and `Options.tsx` to optimize code quality.
-- **Syntax Fixes**: Removed a stray backslash in the `Options.tsx` container view.
-- **Path Handling**: Updated error logging in `ReceivedFileScreen.tsx` for better debugging when opening files via `ReactNativeBlobUtil`.
-- **Styling Updates**: 
-    - Adjusted `profileImage` dimensions in `sendStyles.tsx` from `50x50` to `60x60` for better visibility in scanning animations.
-    - Refined spacing and alignment in the receive screen info containers.
+### 2. State Management (Chunk Store)
+- **Zustand Store**: Added a specialized `useChunkStore` for managing large data transfers.
+- **Chunk Tracking**: Capability to track file IDs, names, total chunk counts, and raw data buffers (`Buffer[]`).
+- **State Handling**: Includes functions to set and reset both global chunk stores and current active chunk sets.
 
-## 📂 Project Structure Updates
-- **src/screens/ReceiveScreen.tsx**: Now a TypeScript-based functional component.
-- **src/components/ui/BreakerText.tsx**: Added to the global component library.
+### 3. Networking & TCP Communication
+- **TCP Provider**: Introduced a `TCPProvider` context to manage socket connections across the application.
+- **Secure Communication**: Implemented `TcpSocket.createTLSServer` for encrypted data transmission using TLS certificates.
+- **Transmission Analytics**: State hooks added to track:
+  - Total sent and received bytes.
+  - Lists of sent and received files.
+  - Connection status and device metadata.
+- **Optimized Throughput**: Configured high water marks (`1024 * 1024 * 1`) and `setNoDelay` for improved performance during large file transfers.
 
-## 🛠 Tech Stack
-- **Framework**: React Native
-- **Styling**: Styled Components / StyleSheet, React Native Linear Gradient
-- **Animations**: Lottie for React Native
-- **Utilities**: 
-    - `react-native-device-info`
-    - `react-native-blob-util`
-    - `react-native-responsive-fontsize`
+## Technical Details
 
-## 📸 Component Preview
-- **ReceiveScreen**: Displays a scanning animation, device info, and a "Show QR" button to facilitate incoming file transfers.
-- **BreakerText**: A simple divider used to separate different action paths (like "Nearby" vs "QR Code").
+### Technologies Used
+| Module | Technology |
+| :--- | :--- |
+| State Management | [Zustand](https://github.com/pmndrs/zustand) |
+| Local Storage | [react-native-mmkv](https://github.com/mrousavy/react-native-mmkv) |
+| Networking | [react-native-tcp-socket](https://github.com/Raphael-R-Alves/react-native-tcp-socket) |
+| Buffer Handling | `buffer` |
 
-## 🚦 Getting Started
-1. Install dependencies: `npm install` or `yarn install`.
-2. Ensure you have the required assets in `src/assets/animations/` and `src/assets/images/`.
-3. Run the app: `npx react-native run-android` or `npx react-native run-ios`.
+### File Structure
+- `src/db/storage.tsx`: MMKV instance and storage abstraction.
+- `src/db/chunkStore.tsx`: Zustand store for file chunking logic.
+- `src/service/TCPProvider.tsx`: Context provider for TLS-encrypted TCP socket management.
+
+## Getting Started
+
+### Prerequisites
+Ensure you have the required TLS certificates in `tls_certs/server-keystore.p12` for the TCP server to initialize correctly.
+
+### Example Usage
+
+**Storage:**
+```typescript
+import { mmkvStorage } from './src/db/storage';
+
+mmkvStorage.setItem('user_pref', 'dark_mode');
+```
+
+**TCP Hook:**
+```typescript
+const { startServer, isConnected } = useTCP();
+
+useEffect(() => {
+  startServer(8080);
+}, []);
+```
+
+**Chunk Store:**
+```typescript
+const { setChunkStore } = useChunkStore();
+
+setChunkStore({
+  id: '123',
+  name: 'video.mp4',
+  totalChunks: 10,
+  chunkArray: []
+});
+```
