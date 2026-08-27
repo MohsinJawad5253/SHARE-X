@@ -13,6 +13,8 @@ import LinearGradient from 'react-native-linear-gradient';
 import CustomText from '../global/CustomText';
 import Icon from '../global/Icon';
 import { Camera, CodeScanner, useCameraDevice } from 'react-native-vision-camera'
+import { useTCP } from '../../service/TCPProvider';
+import { navigate } from '../../utils/NavigationUtil';
 
 interface ModalProps {
     visible: boolean;
@@ -22,6 +24,7 @@ interface ModalProps {
 
 
 const QRScannerModal: FC<ModalProps> = ({ visible, onClose }) => {
+    const {isConnected, connectToServer} = useTCP()
     const [loading, setLoading] = useState(true)
     const [codeFound, setCodeFound] = useState(false)
     const [hasPermission, setHasPermission] = useState(false)
@@ -58,6 +61,9 @@ const QRScannerModal: FC<ModalProps> = ({ visible, onClose }) => {
     const handleScan = (data: any) => {
         const [connectionData, deviceName] = data.replace('tcp://', '').split('|');
         const [host, port] = connectionData?.split(":");
+        //connect
+        connectToServer(host, parseInt(port, 10), deviceName)
+
     };
 
         const codeScanner = useMemo<CodeScanner>(() => ({
@@ -75,6 +81,13 @@ const QRScannerModal: FC<ModalProps> = ({ visible, onClose }) => {
                 }
             }
         }), [codeFound])
+
+        useEffect(()=>{
+           if(isConnected){
+            onClose()
+            navigate('ConnectionScreen')
+           }
+        },[isConnected])
 
         return (
             <Modal

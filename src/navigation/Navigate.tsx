@@ -9,11 +9,13 @@ import SendScreen from '../screens/SendScreen'
 import ConnectionScreen from '../screens/ConnectionScreen'
 import ReceiveScreen from '../screens/ReceiveScreen'
 import ReceivedFileScreen from '../screens/ReceivedFileScreen'
+import { TCPProvider } from '../service/TCPProvider'
 
 const Stack = createNativeStackNavigator()
 
 const Navigation:FC = () => {
   return (
+    <TCPProvider>
     <NavigationContainer ref={navigationRef}>
       <Stack.Navigator
       initialRouteName='SplashScreen'
@@ -28,6 +30,7 @@ const Navigation:FC = () => {
       </Stack.Navigator>
       
     </NavigationContainer>
+    </TCPProvider>
   )
 }
 
