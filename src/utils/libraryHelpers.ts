@@ -1,5 +1,5 @@
 import {launchImageLibrary, Asset} from 'react-native-image-picker';
-import {pick} from 'react-native-document-picker';
+import {pick} from '@react-native-documents/picker';
 import {PermissionsAndroid} from 'react-native';
 
 type MediaPickedCallback = (media: Asset) => void;
